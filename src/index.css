@@ -1,0 +1,1286 @@
+@font-face {
+  font-family: 'Pixel Splash';
+  src: url('assets/fonts/pixel-splash.ttf') format('truetype');
+  /* Single heavy face: cover every weight so the browser never fakes bold */
+  font-weight: 100 900;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 16px;
+  font-family: 'Pixel Splash', sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  background-color: #fff !important;
+}
+
+body *,
+html * {
+  box-sizing: border-box;
+}
+
+@media screen and (max-height: 580px) {
+  body,
+  html {
+    font-size: 14px;
+  }
+}
+
+.playable {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  padding: 20px;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.playable.landscape {
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+
+.playable.landscape .endcard {
+  flex-wrap: wrap;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.landscape .content {
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+
+.info-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.landscape .info-column {
+  order: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.logo-wrap {
+  display: flex;
+  font-size: 20px;
+  align-items: center;
+  font-weight: 700;
+  line-height: 1.27;
+  justify-content: center;
+}
+
+.layout-reversed .logo-wrap {
+  order: 1;
+}
+
+.landscape .logo-wrap {
+  width: 35vw;
+  font-size: 16px;
+  margin-bottom: 0;
+  justify-content: left;
+}
+
+.landscape .endcard .logo-wrap {
+  width: auto;
+}
+
+.compact .logo-wrap {
+  font-size: 3vw;
+}
+
+.compact.landscape .logo-wrap {
+  font-size: 3vh;
+}
+
+.logo-wrap .logo {
+  width: 45vw;
+  margin-right: 10px;
+  animation: logo-breathe 3.2s ease-in-out infinite;
+}
+
+/* Barely-there idle breathing so the logo never sits dead still */
+@keyframes logo-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+.landscape .logo-wrap .logo {
+  width: 100%;
+}
+
+.endcard .logo-wrap .logo {
+  width: 65vw;
+}
+
+.landscape .endcard .logo-wrap .logo {
+  width: 100vh;
+}
+
+.bottom-bar {
+  width: 100%;
+  display: flex;
+  max-width: 100%;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.layout-reversed .bottom-bar {
+  flex-wrap: wrap;
+}
+
+.landscape .bottom-bar {
+  order: 3;
+  margin: 0;
+  flex-grow: 0.5;
+  max-width: 40vw;
+  flex-direction: column;
+}
+
+.compact .bottom-bar {
+  margin: 20px auto 0;
+}
+
+.header {
+  color: #231a4f;
+  position: relative;
+  font-size: 8vw;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 2%;
+}
+
+.endcard-shown .header {
+  animation: none;
+}
+
+.header span {
+  display: block;
+}
+
+.header span.flip {
+  animation: header-flip 400ms ease-in-out;
+}
+
+.bottom-bar .header {
+  display: none;
+}
+
+.landscape .header {
+  order: 0;
+  display: block;
+  font-size: 8vh;
+}
+
+.landscape .info-column .header {
+  display: block;
+  max-width: 40vw;
+}
+
+.landscape .board-area .header {
+  display: none;
+}
+
+.landscape.compact .header {
+  font-size: 6vh;
+}
+
+.board-area {
+  width: 100%;
+  height: 0;
+  min-height: 0;
+  margin: 0 auto;
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.landscape .board-area {
+  width: 90vh;
+  height: 100%;
+  margin: 0;
+  max-width: 45vw;
+}
+
+.board-column {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.landscape .board-column {
+  height: auto;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.landscape .board-column::after {
+  order: 3;
+  content: '';
+  display: block;
+}
+
+.field {
+  position: relative;
+  font-size: 3vw;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+.landscape .field,
+.landscape.compact .field {
+  width: 100%;
+  font-size: 3vh;
+}
+
+.compact .field {
+  width: 45vh;
+  margin: 0 auto;
+  font-size: 2vw;
+}
+
+.compact.landscape .field {
+  font-size: 2vh;
+}
+
+.field .endfield {
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  z-index: 3;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.field .table {
+  border: 1px solid #fff;
+  display: block;
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fff;
+  margin-top: 1px;
+  position: relative;
+  /* Localize the sparkle overlay's color-dodge blend to the board so the
+     glitter shows on painted cells during gameplay, not only in the win state */
+  isolation: isolate;
+  /* Own compositor layer: when a window resize only moves the board, it is
+     shifted instead of repainted */
+  will-change: transform;
+}
+
+.field .table::before {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  display: block;
+  z-index: 1;
+  position: absolute;
+  /* screen instead of color-dodge: dodge can't brighten the zero channels of
+     saturated colors (e.g. pure red #fb0000), which makes the sparkle
+     invisible there; screen shows it on every paint color while still
+     disappearing on the white unpainted board */
+  mix-blend-mode: screen;
+  pointer-events: none;
+  background-image: url('assets/images/sparkle.webp');
+}
+
+.win .field .table {
+  transform: scale(1.1);
+  transition: transform 1s, opacity 0.3s 1s;
+}
+
+.field .table.animate {
+  z-index: 3;
+  transform: translate(0, 0) scale(1);
+}
+
+.field .row {
+  display: flex;
+}
+
+.field .row:first-child .cell {
+  border-top: none;
+}
+
+.field .row:first-child .cell::after {
+  padding-bottom: 100%;
+}
+
+.field {
+  /* Cell-to-cell step (cells overlap by 1px) — used to lay textures across the board */
+  --pitch: calc(var(--cell-size) - 1px);
+}
+
+.field .cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  position: relative;
+  margin-top: -1px;
+  flex-shrink: 1;
+  margin-left: -1px;
+}
+
+.field .cell:first-child {
+  border-left: none;
+}
+
+.field .cell.cell-0 {
+  opacity: 0;
+}
+
+.field .fill-layer,
+.field .number {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+}
+
+.field .cell .number {
+  z-index: 5;
+  font-size: calc(var(--cell-size) * 0.56);
+  font-weight: bold;
+  margin-left: -1px;
+}
+
+.field .cell .cell-border {
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 2;
+  position: absolute;
+  box-shadow: rgba(125, 130, 150, 0.4) 0 0 0 1px inset;
+  pointer-events: none;
+}
+
+.field .filled .cell-border {
+  background: 0 0 !important;
+}
+
+.field .cell.filled .number {
+  color: transparent;
+}
+
+.field .cell.filled .fill-layer {
+  animation: fill-pop 340ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Drag-fills skip the pop: they appear under the moving finger where the pop
+   is invisible, and per-fill animation churn dominates swipe frame time */
+.field .cell.filled.no-pop .fill-layer {
+  animation: none;
+}
+
+/* Staggered entrance: cells hidden until the board-enter sweep scales them in */
+.playable:not(.board-enter):not(.board-entered) .field .table .cell {
+  transform: scale(0);
+}
+
+/* While cells animate in they hold transforms (own stacking contexts), which
+   would lift the sparkle overlay above the numbers — keep it hidden until done */
+.playable:not(.board-entered) .field .table::before {
+  opacity: 0;
+}
+
+.board-enter .field .table .cell {
+  animation: cell-enter var(--enter-ms, 620ms) linear both;
+}
+
+.field .cell.jiggle {
+  animation: cell-jiggle 420ms ease-in-out both;
+}
+
+/* Finished board shrinks away top-left -> bottom-right */
+.board-out .field .table .cell {
+  animation: cell-exit 300ms ease-in both;
+}
+
+/* Animation-independent guarantee that the painted board is gone under the
+   endcard — fill-mode-held transforms are dropped by some webviews */
+.board-gone .field .table .cell {
+  visibility: hidden;
+}
+
+/* In-game UI fades out under the endcard */
+.ui-fade .palette,
+.ui-fade .bottom-bar,
+.ui-fade .header {
+  opacity: 0;
+  transition: opacity 300ms;
+  pointer-events: none;
+}
+
+.win .field .cell .cell-border {
+  border-color: transparent;
+}
+
+/* Five glossy 3D buttons on a pentagon, numbered clockwise from the top.
+   Slot positions and the container size are set from JS (paletteSlots). */
+.palette {
+  --button-size: min(14vw, 7.4vh);
+  --button-depth: calc(var(--button-size) * 0.13);
+  margin: 10px auto 16px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.layout-reversed .palette {
+  order: 0;
+}
+
+.landscape .palette {
+  --button-size: min(8vw, 14vh);
+  margin: 12px auto;
+}
+
+.palette .swatch-row {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.palette .palette-marker {
+  display: none;
+}
+
+/* Registered so a button fading to grey interpolates its shades */
+@property --c {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #000;
+}
+
+@property --c-hi {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #000;
+}
+
+@property --c-lo {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #000;
+}
+
+@property --c-side {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #000;
+}
+
+@property --c-rim {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #000;
+}
+
+.palette .swatch {
+  width: var(--button-size);
+  height: var(--button-size);
+  position: absolute;
+  cursor: pointer;
+  /* Squash from the ground under the 3D base */
+  transform-origin: 50% 113%;
+  animation: palette-squash 2.4s ease-in-out infinite both;
+  animation-delay: calc(1.4s + var(--wave-i, 0) * 0.13s);
+  transition: --c 0.35s ease, --c-hi 0.35s ease, --c-lo 0.35s ease, --c-side 0.35s ease, --c-rim 0.35s ease;
+}
+
+/* 3D base: the darker side of the button + its soft ground shadow */
+.palette .swatch::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--button-depth);
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--c-lo) 0%, var(--c-side) 75%);
+  box-shadow: 0 0 0 calc(var(--button-size) * 0.035) var(--c-rim),
+    0 calc(var(--button-depth) * 0.9) calc(var(--button-size) * 0.14) rgba(20, 24, 32, 0.35);
+}
+
+/* Top face: domed gradient with a bevelled rim */
+.palette .swatch-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 28%, var(--c-hi) 0%, var(--c) 50%, var(--c-lo) 100%);
+  box-shadow: 0 0 0 calc(var(--button-size) * 0.035) var(--c-rim),
+    inset 0 calc(var(--button-size) * -0.07) calc(var(--button-size) * 0.08) rgba(0, 0, 0, 0.3),
+    inset 0 calc(var(--button-size) * 0.05) calc(var(--button-size) * 0.04) rgba(255, 255, 255, 0.55);
+}
+
+/* Glossy highlight on the upper half */
+.palette .swatch-face::before {
+  content: '';
+  position: absolute;
+  top: 7%;
+  left: 17%;
+  width: 66%;
+  height: 40%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.08) 100%);
+  pointer-events: none;
+}
+
+/* Bounce light on the lower rim sells the bevel */
+.palette .swatch-face::after {
+  content: '';
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  bottom: 5%;
+  height: 14%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+
+/* Shine band that sweeps across right after each squash */
+.palette .swatch-shine {
+  position: absolute;
+  top: -10%;
+  bottom: -10%;
+  left: -60%;
+  width: 45%;
+  z-index: 3;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.75) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: translateX(0) skewX(-20deg);
+  animation: swatch-shine 2.4s ease-in-out infinite both;
+  animation-delay: calc(1.4s + var(--wave-i, 0) * 0.13s);
+  pointer-events: none;
+}
+
+.field .cell:not(.filled) .number {
+  font-family: inherit;
+  font-weight: bold;
+  color: #231a4f;
+}
+
+.palette .swatch .swatch-number {
+  position: relative;
+  z-index: 2;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: calc(var(--button-size) * 0.46);
+  color: #fff;
+  text-shadow: 0 calc(var(--button-size) * 0.035) 0 var(--c-side), 1px 1px 0 var(--c-side), -1px 1px 0 var(--c-side),
+    1px -1px 0 var(--c-side), -1px -1px 0 var(--c-side);
+  pointer-events: none;
+}
+
+.palette .swatch.filled .swatch-number {
+  visibility: hidden;
+}
+
+/* Face pushes into the base as the drop launches */
+.palette .swatch.launch .swatch-face {
+  animation: face-press 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Once its paint has been used the button is grey (JS swaps the colour vars)
+   and stops idling */
+.palette .swatch.empty,
+.win .palette .swatch,
+.palette .swatch.empty .swatch-shine,
+.win .palette .swatch-shine {
+  animation: none;
+}
+
+.palette .swatch.empty .swatch-shine {
+  display: none;
+}
+
+/* Squash-and-stretch wave running clockwise around the buttons */
+@keyframes palette-squash {
+  0% { transform: scale(1, 1); }
+  5% { transform: scale(1.14, 0.86); }
+  10% { transform: scale(0.9, 1.12); }
+  15% { transform: scale(1.05, 0.96); }
+  20% { transform: scale(0.99, 1.01); }
+  24%, 100% { transform: scale(1, 1); }
+}
+
+@keyframes swatch-shine {
+  0%, 8% { transform: translateX(0) skewX(-20deg); }
+  32%, 100% { transform: translateX(420%) skewX(-20deg); }
+}
+
+@keyframes face-press {
+  0% { transform: translateY(0) scale(1, 1); }
+  30% { transform: translateY(calc(var(--button-depth) * 0.85)) scale(1.05, 0.93); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .palette .swatch,
+  .palette .swatch-shine,
+  .logo-wrap .logo { animation: none; }
+}
+
+/* Juicy check stamp: spins and scales in over the finished colour's number */
+.palette .swatch .swatch-check {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  width: 58%;
+  z-index: 4;
+  aspect-ratio: 125 / 109;
+  margin-left: -29%;
+  transform: translateY(-50%) scale(0) rotate(-162deg);
+  background: url('assets/images/check_mark.png') center center / contain no-repeat;
+  pointer-events: none;
+}
+
+.palette .swatch.empty {
+  pointer-events: none;
+}
+
+.palette .swatch.filled .swatch-check {
+  animation: check-spin-in 540ms cubic-bezier(0.34, 1.56, 0.64, 1) 120ms forwards;
+}
+
+/* Paint drop, landing splash and the wave ring that spreads over the board */
+.fx-layer {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 150;
+  overflow: hidden;
+  position: fixed;
+  pointer-events: none;
+}
+
+.drop {
+  position: absolute;
+  will-change: transform;
+}
+
+.drop-body {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, var(--c-hi) 0%, var(--c) 45%, var(--c-lo) 100%);
+  box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.25), 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.drop::after {
+  content: '';
+  position: absolute;
+  top: 16%;
+  left: 24%;
+  width: 32%;
+  height: 24%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.splash-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid var(--c);
+  box-shadow: 0 0 10px var(--c), inset 0 0 8px var(--c-hi);
+}
+
+.splash-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--c-hi) 0%, var(--c) 55%, var(--c-lo) 100%);
+}
+
+.wave-ring {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(255, 255, 255, 0) 74%,
+    var(--ring) 88%,
+    rgba(255, 255, 255, 0.7) 95%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.tutorial {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  z-index: 6;
+  position: absolute;
+  pointer-events: none;
+}
+
+.tutorial.hidden,
+.endcard-shown .tutorial {
+  display: none;
+  animation: none;
+  transition: none;
+  pointer-events: none;
+}
+
+.tutorial.tutorial-swatch {
+  width: var(--button-size);
+  height: var(--button-size);
+}
+
+.tutorial .tutorial-part {
+  position: absolute;
+}
+
+.tutorial .tutorial-part::after {
+  content: '';
+  display: block;
+}
+
+.tutorial .hand {
+  top: 55%;
+  left: 50%;
+  transform-origin: 0 0;
+  animation: hand-pulse 1.2s ease-in-out infinite;
+}
+
+/* The fingertip sits 5% / 5% in from the image's top-left corner: shift it onto
+   the .hand origin so both the placement and the pulse anchor on the tip */
+.tutorial .hand::after {
+  width: 25vw;
+  height: 25vw;
+  background-size: contain;
+  background-image: url('assets/images/handTutorial.png');
+  background-repeat: no-repeat;
+  transform: translate(-5%, -5%);
+}
+
+/* Near the screen's right edge the hand points from the other side */
+.tutorial.mirrored .hand {
+  left: auto;
+  right: 50%;
+  transform-origin: 100% 0;
+}
+
+.tutorial.mirrored .hand::after {
+  transform: translate(5%, -5%) scaleX(-1);
+}
+
+.landscape .tutorial .hand::after {
+  width: 25vh;
+  height: 25vh;
+}
+
+.compact .tutorial .hand::after {
+  width: 20vw;
+  height: 20vw;
+}
+
+.compact.landscape .tutorial .hand::after {
+  width: 20vh;
+  height: 20vh;
+}
+
+/* Endcard: transparent overlay — logo on top, "Next Level" button a hand keeps
+   pressing at the bottom */
+.endcard {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  opacity: 0;
+  position: fixed;
+  transition: opacity 0.5s ease-in-out;
+  align-items: center;
+  flex-direction: column;
+  pointer-events: none;
+  justify-content: space-between;
+  padding: 6vh 0 8vh;
+}
+
+.endcard-shown .endcard {
+  opacity: 1;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.endcard .logo-wrap {
+  order: 0;
+}
+
+.endcard .next-btn-wrap {
+  order: 1;
+}
+
+.endcard-shown .endcard .logo-wrap {
+  animation: logo-drop 360ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.endcard .logo-wrap .logo {
+  width: 65vw;
+}
+
+.landscape .endcard .logo-wrap .logo {
+  width: 45vh;
+}
+
+.next-btn-wrap {
+  position: relative;
+}
+
+.endcard .next-btn {
+  width: 70vw;
+  font-size: 7vw;
+  animation: none;
+  box-shadow: 0 5px 0 #4a22b8, 0 9px 18px rgba(123, 77, 255, 0.35);
+}
+
+.landscape .endcard .next-btn {
+  width: 50vh;
+  font-size: 7vh;
+}
+
+.endcard-shown .endcard .next-btn {
+  animation: btn-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both, btn-press 1.4s ease-out 700ms infinite;
+}
+
+.endcard .press-hand {
+  position: absolute;
+  left: 62%;
+  top: 42%;
+  width: 17vw;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 5% 5%;
+}
+
+.landscape .endcard .press-hand {
+  width: 14vh;
+}
+
+.endcard-shown .endcard .press-hand {
+  animation: hand-appear 200ms 620ms both, hand-press-btn 1.4s ease-out 700ms infinite;
+}
+
+.cta {
+  color: #fff;
+  padding: 3vw 0;
+  font-size: 5vw;
+  min-width: 35vw;
+  background: linear-gradient(180deg, #a07bff 0%, #7b4dff 55%, #6634ea 100%);
+  text-align: center;
+  border-radius: 200px;
+}
+
+.endcard-shown .cta {
+  animation: cta-pulse 1.5s ease 0s infinite;
+}
+
+/* Gameplay Install: gentler than the colour buttons — slow breathe + a shine pass */
+.bottom-bar .cta {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 0 #4a22b8, 0 7px 14px rgba(123, 77, 255, 0.35);
+  animation: cta-breathe 1.8s ease-in-out infinite;
+}
+
+.bottom-bar .cta::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -40%;
+  width: 28%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: translateX(0) skewX(-20deg);
+  animation: cta-shine 3.6s ease-in-out 1s infinite both;
+  pointer-events: none;
+}
+
+@keyframes cta-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes cta-shine {
+  0% { transform: translateX(0) skewX(-20deg); }
+  30%, 100% { transform: translateX(650%) skewX(-20deg); }
+}
+
+.layout-reversed .cta {
+  order: 2;
+}
+
+.landscape .cta {
+  padding: 3vh 0;
+  font-size: 5vh;
+}
+
+.compact .cta {
+  font-size: 5vw;
+}
+
+.compact.landscape .cta {
+  font-size: 5vh;
+}
+
+.confetti {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  position: fixed;
+  pointer-events: none;
+}
+
+/* Individual confetti pieces: JS sets --size / --c and animates the transform,
+   which ends in translate(-50%, -50%) so every shape spins about its centre */
+.confetti-piece {
+  top: 0;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  position: absolute;
+  background: var(--c);
+  transform-origin: 0 0;
+  will-change: transform, opacity;
+}
+
+.confetti-rect {
+  width: calc(var(--size) * 0.42);
+  border-radius: 2px;
+}
+
+.confetti-square {
+  width: calc(var(--size) * 0.8);
+  height: calc(var(--size) * 0.8);
+  border-radius: 22%;
+}
+
+.confetti-circle {
+  width: calc(var(--size) * 0.72);
+  height: calc(var(--size) * 0.72);
+  border-radius: 50%;
+}
+
+.confetti-triangle {
+  clip-path: polygon(50% 6%, 96% 90%, 4% 90%);
+}
+
+.confetti-star {
+  width: calc(var(--size) * 1.15);
+  height: calc(var(--size) * 1.15);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.confetti-squiggle {
+  width: calc(var(--size) * 1.3);
+  height: calc(var(--size) * 0.5);
+  -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 16'%3E%3Cpolyline points='3,8 9,3 15,13 21,3 27,13 33,3 37,8' fill='none' stroke='black' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 16'%3E%3Cpolyline points='3,8 9,3 15,13 21,3 27,13 33,3 37,8' fill='none' stroke='black' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 100% 100% no-repeat;
+}
+
+@keyframes number-out {
+  to {
+    transform: scale(0);
+  }
+}
+
+@keyframes check-spin-in {
+  to {
+    transform: translateY(-50%) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes cta-pulse {
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fill-pop {
+  0% {
+    transform: scale(0.2);
+    filter: brightness(1.9);
+  }
+  55% {
+    transform: scale(1.08);
+    filter: brightness(1.3);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes cell-squash {
+  from {
+    transform: scale(0.85);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes cell-jiggle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.85);
+  }
+  70% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes header-flip {
+  0%,
+  100% {
+    transform: rotateX(0);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+}
+
+/* Scale only: the fingertip stays anchored to the same cell. */
+@keyframes hand-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.88);
+  }
+}
+
+/* Sampled elastic-out (p=0.34): quick overshoot with a settling wobble */
+@keyframes cell-enter {
+  0% {
+    transform: scale(0);
+  }
+  20% {
+    transform: scale(1.21);
+  }
+  37% {
+    transform: scale(0.93);
+  }
+  54% {
+    transform: scale(1.02);
+  }
+  70% {
+    transform: scale(0.99);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes cell-exit {
+  to {
+    transform: scale(0);
+  }
+}
+
+@keyframes logo-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes btn-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes btn-press {
+  0%,
+  20%,
+  100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(0.92);
+  }
+}
+
+@keyframes hand-appear {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hand-press-btn {
+  0%,
+  20%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  10% {
+    opacity: 1;
+    transform: scale(0.84);
+  }
+}
+
+/* Fixed outline cells are visible from the start and never painted. */
+/* Flat material (config.game.cellMaterial = 'flat'): plain colour, no glitter */
+.material-flat .field .table::before {
+  display: none;
+}
+
+/* Bevel material on painted cells (config.game.cellMaterial = 'bevel'):
+   no glitter overlay, each block gets the outline's bevel edges */
+.material-bevel .field .table::before {
+  display: none;
+}
+
+.material-bevel .field .cell.filled .fill-layer {
+  box-shadow: inset 0 calc(var(--cell-size) * 0.1) 0 rgba(255, 255, 255, 0.3),
+    inset calc(var(--cell-size) * 0.1) 0 0 rgba(255, 255, 255, 0.15),
+    inset 0 calc(var(--cell-size) * -0.1) 0 rgba(0, 0, 0, 0.32),
+    inset calc(var(--cell-size) * -0.1) 0 0 rgba(0, 0, 0, 0.18);
+}
+
+/* Loading splash: game icon over the brand colour until the playable starts */
+#splash {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 300;
+  display: flex;
+  position: fixed;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background: #231a4f;
+  transition: opacity 300ms, visibility 0s 300ms;
+}
+
+#splash.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#splash .splash-icon {
+  width: min(170px, 40vmin);
+  height: min(170px, 40vmin);
+  border-radius: 18%;
+  background: url('assets/Game_Logo.png') center / cover;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  animation: splash-bob 2.4s ease-in-out infinite;
+}
+
+#splash .splash-dots {
+  display: flex;
+  margin-top: min(56px, 9vmin);
+}
+
+#splash .splash-dots span {
+  width: 16px;
+  height: 16px;
+  margin: 0 6px;
+  border-radius: 4px;
+  background: #ff4f8b;
+  animation: splash-hop 900ms ease-in-out infinite;
+}
+
+#splash .splash-dots span:nth-child(2) {
+  background: #ffc93c;
+  animation-delay: 150ms;
+}
+
+#splash .splash-dots span:nth-child(3) {
+  background: #22b8f0;
+  animation-delay: 300ms;
+}
+
+@keyframes splash-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes splash-hop {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-12px);
+  }
+}

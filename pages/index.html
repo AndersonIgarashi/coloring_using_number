@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Pixel Splash · Playable Ad</title>
+    <meta name="description" content="Playable ad demo: tap a number and a drop of paint splashes a whole color onto a pixel-art picture." />
+    <meta property="og:title" content="Pixel Splash · Playable Ad" />
+    <meta property="og:description" content="Tap-to-color pixel art playable ad built with TypeScript, DOM/CSS and the Web Animations API." />
+    <meta name="theme-color" content="#231a4f" />
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <style>
+      @font-face {
+        font-family: 'Pixel Splash';
+        src: url('pixel-splash.ttf') format('truetype');
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      :root {
+        --ink: #231a4f;
+        --deep: #150f36;
+        --violet: #7b4dff;
+        --violet-light: #a07bff;
+        --lavender: #d9d1ff;
+        --pink: #ff4f8b;
+        --orange: #ff8a3d;
+        --yellow: #ffc93c;
+        --green: #34d399;
+        --cyan: #22b8f0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        color: #fff;
+        background: radial-gradient(1100px 700px at 15% 10%, rgba(123, 77, 255, 0.45), transparent 60%),
+          radial-gradient(900px 600px at 95% 95%, rgba(255, 79, 139, 0.3), transparent 60%),
+          linear-gradient(180deg, #1b1442 0%, var(--ink) 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Faint coloring-grid behind everything */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 28px 28px;
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 35%, transparent 80%);
+        mask-image: radial-gradient(circle at 50% 50%, #000 35%, transparent 80%);
+      }
+
+      .pixels span {
+        position: fixed;
+        z-index: -1;
+        width: var(--s);
+        height: var(--s);
+        border-radius: 22%;
+        background: var(--c);
+        opacity: 0.55;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.18) inset;
+        animation: drift var(--d, 9s) ease-in-out infinite alternate;
+      }
+
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(32px, 6vw, 96px);
+        padding: 32px 24px;
+      }
+
+      .info {
+        max-width: 440px;
+        text-align: center;
+      }
+
+      .info img {
+        width: min(420px, 92%);
+        height: auto;
+        filter: drop-shadow(0 12px 22px rgba(10, 6, 30, 0.5));
+        animation: bob 3.2s ease-in-out infinite;
+      }
+
+      .info p {
+        font-size: 18px;
+        line-height: 1.5;
+        font-weight: 600;
+        color: var(--lavender);
+        margin: 18px 0 8px;
+      }
+
+      .tech {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin: 16px 0 26px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .tech li {
+        font-family: 'Pixel Splash', system-ui, sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+        padding: 6px 12px 5px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .btn {
+        font-family: 'Pixel Splash', system-ui, sans-serif;
+        font-size: 19px;
+        letter-spacing: 0.5px;
+        color: #fff;
+        text-decoration: none;
+        border: 0;
+        cursor: pointer;
+        padding: 13px 22px 12px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, var(--violet-light) 0%, var(--violet) 55%, #6634ea 100%);
+        box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.35), 0 6px 0 #4a22b8, 0 10px 18px rgba(0, 0, 0, 0.3);
+        text-shadow: 0 2px 0 #4a22b8;
+        transition: transform 0.12s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px) scale(1.03);
+      }
+
+      .btn:active {
+        transform: translateY(3px) scale(0.97);
+      }
+
+      .btn.secondary {
+        background: linear-gradient(180deg, #4a3d93, #342a75);
+        box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.18), 0 6px 0 #1c1548, 0 10px 18px rgba(0, 0, 0, 0.3);
+        text-shadow: 0 2px 0 #1c1548;
+      }
+
+      .hint {
+        margin-top: 22px;
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      .phone {
+        position: relative;
+        flex: none;
+        height: min(88vh, 880px);
+        aspect-ratio: 9 / 19.5;
+        padding: 12px;
+        border-radius: 48px;
+        background: #0e0a26;
+        box-shadow: 0 0 0 2px #3a2f7a, 0 0 60px rgba(123, 77, 255, 0.35), 0 30px 60px rgba(8, 5, 24, 0.6);
+      }
+
+      .phone iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: 36px;
+        background: #fff;
+      }
+
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-1deg);
+        }
+        50% {
+          transform: translateY(-8px) rotate(1deg);
+        }
+      }
+
+      @keyframes drift {
+        from {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        to {
+          transform: translate(18px, -26px) rotate(25deg);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .info img,
+        .pixels span {
+          animation: none;
+        }
+      }
+
+      @media (max-width: 900px) and (min-width: 641px) {
+        main {
+          flex-direction: column;
+        }
+      }
+
+      /* On phones the playable takes the whole screen */
+      @media (max-width: 640px) {
+        .pixels,
+        .info {
+          display: none;
+        }
+
+        main {
+          padding: 0;
+        }
+
+        .phone {
+          position: fixed;
+          inset: 0;
+          height: 100dvh;
+          width: 100vw;
+          aspect-ratio: auto;
+          padding: 0;
+          border-radius: 0;
+          box-shadow: none;
+        }
+
+        .phone iframe {
+          border-radius: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pixels" aria-hidden="true">
+      <span style="--c: var(--pink); --s: 22px; top: 12%; left: 6%; --d: 8s"></span>
+      <span style="--c: var(--yellow); --s: 14px; top: 26%; left: 44%; --d: 11s"></span>
+      <span style="--c: var(--cyan); --s: 26px; top: 72%; left: 9%; --d: 10s"></span>
+      <span style="--c: var(--green); --s: 16px; top: 86%; left: 38%; --d: 7s"></span>
+      <span style="--c: var(--orange); --s: 18px; top: 8%; left: 88%; --d: 12s"></span>
+      <span style="--c: var(--violet-light); --s: 24px; top: 58%; left: 93%; --d: 9s"></span>
+      <span style="--c: var(--yellow); --s: 12px; top: 90%; left: 76%; --d: 8s"></span>
+      <span style="--c: var(--pink); --s: 12px; top: 44%; left: 3%; --d: 13s"></span>
+    </div>
+    <main>
+      <section class="info">
+        <img src="logo.png" alt="Pixel Splash" width="879" height="327" />
+        <p>
+          Playable ad: tap a number and a drop of paint jumps onto the picture, splashes, and a wave paints every cell of
+          that color. Finish all six colors to reveal the pixel art.
+        </p>
+        <ul class="tech">
+          <li>TypeScript</li>
+          <li>DOM + CSS</li>
+          <li>Web Animations</li>
+          <li>Custom typeface</li>
+          <li>Procedural art</li>
+          <li>Procedural audio</li>
+        </ul>
+        <div class="actions">
+          <a class="btn" href="play.html">Play full screen</a>
+          <button class="btn secondary" id="restart" type="button">Restart</button>
+          <a class="btn secondary" href="https://github.com/AndersonIgarashi/coloring_using_number">Source</a>
+        </div>
+        <p class="hint">Turn the sound on. Works with mouse or touch.</p>
+      </section>
+      <div class="phone">
+        <iframe id="game" src="play.html" title="Pixel Splash playable" allow="autoplay; fullscreen"></iframe>
+      </div>
+    </main>
+    <script>
+      document.getElementById('restart').addEventListener('click', function () {
+        var frame = document.getElementById('game');
+        frame.src = 'play.html?t=' + Date.now();
+      });
+    </script>
+  </body>
+</html>

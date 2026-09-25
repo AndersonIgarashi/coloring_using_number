@@ -1,0 +1,10 @@
+{
+  "filename": "{app}_{name}_{version}_{network}",
+  "app": "PixelSplash",
+  "name": "TapToColor",
+  "version": "v1",
+  "language": "en",
+  "orientation": "both",
+  "googlePlayUrl": "https://play.google.com/store/games",
+  "appStoreUrl": "https://apps.apple.com/iphone/games"
+}

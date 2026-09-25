@@ -1,0 +1,20 @@
+{
+  "name": "pixel-splash",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pixel Splash - tap-to-color pixel art playable ad (TypeScript + DOM/CSS)",
+  "scripts": {
+    "dev": "playable-scripts dev --port 3004",
+    "build": "playable-scripts build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@smoud/playable-sdk": "^1.2.0",
+    "howler": "^2.2.4"
+  },
+  "devDependencies": {
+    "@smoud/playable-scripts": "^1.2.14",
+    "@types/howler": "^2.2.13",
+    "typescript": "^5.9.3"
+  }
+}
