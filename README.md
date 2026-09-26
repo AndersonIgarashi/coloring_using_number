@@ -53,4 +53,30 @@ Regenerate them into `assets/` (PNGs are compressed when pngquant is on `PATH` o
 python tools/build_assets.py --blender "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"
 ```
 
+## How It Was Built (AI Workflow)
+
+Claude Code wrote the game code and the Python generators in `tools/`, so no asset was drawn or recorded by hand except
+the tutorial hand. My part was direction and review: I played each build on a phone and decided what had to change.
+
+| Stage | Tool | What it did |
+| --- | --- | --- |
+| Typeface | Claude Code → `skel.py`, `font.py` | Stroke skeletons outlined through an SDF and marching squares, written to TrueType |
+| Logo and icons | Claude Code → `sdfdraw.py` | A small SDF painter for the logo, icon, check mark and sparkle |
+| Pixel art | Claude Code → `pixel_art.py` | The board picture, cell by cell |
+| Sound | Claude Code → `sfx.py` (numpy) | FM bells, marimba and Karplus–Strong plucks, encoded to MP3 |
+| Game | Claude Code | TypeScript, DOM and CSS driven by the Web Animations API |
+
+### What I changed after playing it
+
+- **Tutorial hand.** It pointed at the wrong targets and looked rough. It now walks the palette in order, from 1 to the
+  last color left, and uses a hand illustration I supplied.
+- **One input.** Tapping the numbers on the picture also painted. Painting now starts only from the palette buttons.
+- **Keep the grid.** Cell borders stay visible after a color fills, so the picture still reads as pixel art.
+- **Confetti.** Each piece rotates over its lifetime, in both directions and at different speeds.
+- **Store redirect.** Finishing the picture, or tapping a "next level" button, opens the store.
+- **Cut what nobody sees.** I asked for a pixel-art wink at the end, then removed it after seeing it in the build: at that
+  size nobody notices it, so it only cost processing.
+- **Resize.** The game stuttered while I resized it with DevTools open. Resizes are now coalesced into one layout per frame.
+- **Feedback.** A used color button fades to grey because its paint is gone, and the logo has a subtle idle pulse.
+
 Pikachu is © Nintendo / Creatures / GAME FREAK. The pixel-art face is fan art for a non-commercial portfolio piece.
